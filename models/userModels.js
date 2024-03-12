@@ -17,11 +17,13 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        maxlength: 50
+        maxlength: 50,
+        required :true
     },
     password: {
         type: String,
-        maxlength: 20
+        maxlength: 20,
+        required: true
     },
     born: {
         type: Date
