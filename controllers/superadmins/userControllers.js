@@ -30,21 +30,21 @@ const signupsa = async (req, res) => {
                 return res.status(401).json("Not Authorized!");
         }
         const user = await User.create({
-            full_name,
-            nick_name,
-            gender,
-            email,
-            password,
-            born,
-            ads,
-            job_positions,
-            job_industries,
-            countries,
-            provinces,
-            cities,
-            district,
+            full_name : full_name,
+            nick_name : nick_name,
+            gender : gender,
+            email : email,
+            password : password,
+            born : born,
+            ads : ads,
+            job_positions : job_positions,
+            job_industries : job_industries,
+            countries : countries,
+            provinces : provinces,
+            cities : cities,
+            district : district,
             roles: role,
-            photos
+            photos : photos
         });
         const token = createToken(user._id);
         res.status(200).json({ email: user.email, token });
@@ -112,5 +112,4 @@ const deleteUserById = async (req, res) => {
     }
 };
 
-module.exports = { deleteUserById };
 module.exports = { signupsa, getAllUser, updateUserById, deleteUserById };

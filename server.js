@@ -6,9 +6,12 @@ const mongoose = require('mongoose')
 const app = express()
 
 const saUser = require('./routers/superadmins/userRoutes')
+const uUser = require('./routers/users/userRoutes')
 
 app.use(express.json());
-app.use('/v1/superadmin/',saUser)
+app.use('/v1/api/superadmin/',saUser)
+app.use('/v1/api/user/',uUser)
+
 app.use((req, res, next) => {
   console.log(req.path, req.method)
   next()

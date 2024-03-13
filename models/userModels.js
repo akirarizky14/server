@@ -22,7 +22,6 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        maxlength: 20,
         required: true
     },
     born: {
@@ -67,6 +66,15 @@ const userSchema = new Schema({
     photos: {
         type: String,
         maxlength: 100
+    },
+    isEmailVerified :{
+        type: Boolean,
+        default : false
+    },
+    otp:{
+        type: Number,
+        minlength:1,
+        maxlength:10
     }
 });
 
