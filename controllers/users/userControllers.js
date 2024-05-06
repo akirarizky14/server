@@ -69,7 +69,7 @@ const createUser = async (req, res) => {
         };
         
         await transporter.sendMail(mailData);
-        
+
         const token = createToken(user._id);
         res.status(200).json({ email: user.email, token });
     } catch (error) {
@@ -133,5 +133,25 @@ const loginUser = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+const getDataByEmail = async (req, res) => {
+    const userEmail = req.params.email; // Mengambil email dari parameter URL
 
-module.exports = { createUser ,verifyEmail ,loginUser};
+    try {
+        // Cari pengguna berdasarkan email
+        const user = await User.findOne({ email: userEmail });
+
+        if (!user) {
+            // Jika pengguna tidak ditemukan, kirim respons 404
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Jika pengguna ditemukan, kirim respons dengan data pengguna
+        res.status(200).json({ user });
+    } catch (error) {
+        // Tangani kesalahan dan kirim respons dengan pesan kesalahan
+        res.status(500).json({ error: error.message });
+    }
+};
+
+module.exports = { createUser, verifyEmail, loginUser, getDataByEmail };
+

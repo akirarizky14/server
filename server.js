@@ -7,6 +7,13 @@ const app = express()
 
 const saUser = require('./routers/superadmins/userRoutes')
 const uUser = require('./routers/users/userRoutes')
+
+const cors = require('cors')
+
+app.use(cors({
+  allowedHeaders: ['Authorization']
+}));
+
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:5173");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
