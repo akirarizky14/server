@@ -21,20 +21,23 @@ const createUser = async (req, res) => {
     
     try {
         const otp = generateOTP();
-        
-        const findEmail = await User.findOne({ email: email });
+        if(!email || !password || !nick_name || !full_name){
+            throw Error('All fields must be filled')
+        }
+        const findEmail = await User.findOne({ email: email })
+            
         if (findEmail) {
-            return res.status(400).json("Email is already registered");
+            throw Error('Email is already registered Please Login')
         }
         
         // Validasi email
         if (!validator.isEmail(email)) {
-            return res.status(400).json("Please use the correct Email Format");
+            throw Error("Please use the correct Email Format");
         }
         
         // Validasi password
         if (!validator.isStrongPassword(password)) {
-            return res.status(400).json("Please use a strong password");
+            throw Error("Please create a password that is at least 8 characters long and contains a combination of uppercase and lowercase letters, along with symbols, to enhance security.");
         }
         
         // Hash password
@@ -63,7 +66,7 @@ const createUser = async (req, res) => {
         
         res.status(200).json({ user, message: 'Mail Sent' });
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(400).json({error: error.message})
     }
 };
 
