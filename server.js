@@ -5,23 +5,22 @@ const mongoose = require('mongoose')
 
 const app = express()
 
-const saUser = require('./routers/superadmins/userRoutes')
 const uUser = require('./routers/users/userRoutes')
+
+const saUser = require('./routers/superadmins/userRoutes')
+const saCat = require('./routers/superadmins/catRoutes')
 
 const cors = require('cors')
 
+app.use(express.json());
 app.use(cors({
-  allowedHeaders: ['Authorization']
+  origin:'*', 
+  allowedHeaders: ['Content-Type','Authorization']
 }));
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next()
-})
-
-app.use(express.json());
+app.use('/v1/api/superadmin/categories',saCat)
 app.use('/v1/api/superadmin/',saUser)
+
 app.use('/v1/api/user/',uUser)
 
 mongoose.connect(process.env.MONGO_URI)

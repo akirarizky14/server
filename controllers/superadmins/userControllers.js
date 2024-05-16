@@ -1,12 +1,13 @@
 const User = require('../../models/userModels');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const createToken = (_id) => {
     return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '3d' });
 };
 
 const signupsa = async (req, res) => {
-    const { full_name, nick_name, gender, email, password, born, ads, job_positions, job_industries, countries, provinces, cities, district, photos, pass } = req.body;
+    const { full_name, nick_name, email, password, photos, pass } = req.body;
     if (!email || !password || !pass) {
         return res.status(400).json({ error: "Email, password, and pass are required" });
     }
@@ -32,17 +33,8 @@ const signupsa = async (req, res) => {
         const user = await User.create({
             full_name : full_name,
             nick_name : nick_name,
-            gender : gender,
             email : email,
             password : password,
-            born : born,
-            ads : ads,
-            job_positions : job_positions,
-            job_industries : job_industries,
-            countries : countries,
-            provinces : provinces,
-            cities : cities,
-            district : district,
             roles: role,
             photos : photos
         });
@@ -53,6 +45,23 @@ const signupsa = async (req, res) => {
     }
 };
 
+const loginsa = async (req,res) =>{
+    try {
+        const {email,password} = req.body;
+        const user = await User.findOne({email : email})
+        if (!user) {
+            throw new Error('User not found');
+        }
+        const passwordMatch = bcrypt.compare(password,user.password);
+        if (!passwordMatch) {
+            throw new Error('Incorrect Password')
+        }
+        const token = createToken(user._id);
+        res.status(200).json({email : user.email, token})
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
 
 const getAllUser = async (req,res) =>{
     try {
@@ -112,4 +121,4 @@ const deleteUserById = async (req, res) => {
     }
 };
 
-module.exports = { signupsa, getAllUser, updateUserById, deleteUserById };
+module.exports = { signupsa, loginsa, getAllUser, updateUserById, deleteUserById };

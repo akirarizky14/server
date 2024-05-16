@@ -87,6 +87,7 @@ const verifyEmail = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
+        console.log(otp,user.otp)
         if(otp !== user.otp){
             return res.status(400).json({ message: 'Invalid OTP' });
         }
@@ -118,12 +119,6 @@ const loginUser = async (req, res) => {
         if (!passwordMatch) {
             throw new Error('Incorrect password');
         }
-
-        // Periksa apakah email pengguna sudah diverifikasi
-        if (!user.isEmailVerified) {
-            throw new Error('Email not verified');
-        }
-
         // Jika semua verifikasi berhasil, buat token otentikasi
         const token = jwt.sign({ userId: user._id }, process.env.SECRET, { expiresIn: '1h' });
 

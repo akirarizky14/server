@@ -17,6 +17,10 @@ const catSchema = new Schema({
     level_cat:{
         type : String,
         enum : ['Beginner','Intermediate','Professional']
+    },
+    user_id:{
+        type:String,
+        required:true
     }
 })
 
