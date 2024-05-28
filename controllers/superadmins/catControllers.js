@@ -21,12 +21,31 @@ const postCategories = async (req, res) => {
 
 const getAllCategories = async (req,res) =>{
     try {
-        const user_id = req.user._id;
-        const cat = await catModels.find({user_id}).sort({createdAt: -1});
+        const cat = await catModels.find();
         res.status(200).json(cat)
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 }
 
-module.exports = { postCategories, getAllCategories };
+const updateCategories = async (req,res)=>{
+    try {
+        const id = req.params;
+        const cat = await catModels.findOne({user_id : id});
+        console.log(cat)
+
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+const getCategoriesbyUser = async (req,res) =>{
+    try {
+        const user_id = req.params
+        const cat = await catModels.find({user_id})
+        res.status(200).json(cat)
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+}
+module.exports = { postCategories, getAllCategories ,getCategoriesbyUser};
