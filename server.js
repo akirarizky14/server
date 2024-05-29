@@ -5,10 +5,13 @@ const mongoose = require('mongoose')
 
 const app = express()
 
+// User Routes
 const uUser = require('./routers/users/userRoutes')
 
+// SuperAdmin Routes
 const saUser = require('./routers/superadmins/userRoutes')
 const saCat = require('./routers/superadmins/catRoutes')
+const saProduct = require('./routers/superadmins/productRoutes')
 
 const cors = require('cors')
 
@@ -19,6 +22,7 @@ app.use(cors({
 }));
 
 app.use('/v1/api/superadmin/categories',saCat)
+app.use('/v1/api/superadmin/product',saProduct)
 app.use('/v1/api/superadmin/',saUser)
 
 app.use('/v1/api/user/',uUser)

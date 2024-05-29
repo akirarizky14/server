@@ -38,7 +38,7 @@ const productSchema = new Schema({
         type: String
     },
     created_at: {
-        type: Date.now
+        type: Date
     },
     created_by:{
         type: String

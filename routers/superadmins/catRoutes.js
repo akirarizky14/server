@@ -7,4 +7,4 @@ router.post('/postCat',middleware,catControllers.postCategories);
 router.get('/getAll',middleware,catControllers.getAllCategories);
 
 
-module.exports = router
+module.exports = router;
