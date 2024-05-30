@@ -73,7 +73,7 @@ const getAllUser = async (req,res) =>{
 }
 const updateUserById = async (req, res) => {
     const { id } = req.params; 
-    const { full_name, nick_name, gender, password, born, ads, job_positions, job_industries, countries, provinces, cities, district, roles, photos } = req.body;
+    const { full_name, nick_name, gender, password, born, ads, job_positions, job_industries, countries, provinces, cities, district, roles, photos ,otp} = req.body;
     
     try {
         let user = await User.findById(id);
@@ -96,6 +96,7 @@ const updateUserById = async (req, res) => {
         user.district = district || user.district;
         user.roles = roles || user.roles;
         user.photos = photos || user.photos;
+        user.otp = otp || user.otp;
 
         user = await user.save();
 
