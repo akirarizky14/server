@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const productSchema = new Schema({
-    product_id:{
-        type:String,
-        required:true
-    },
+const courseSchema = new Schema({
     user_id:{
         type:String,
         required:true
@@ -15,11 +11,11 @@ const productSchema = new Schema({
         maxLength : 50
     },
     photos:{
-        type : String,
+        type : [String], // Menggunakan array untuk menyimpan banyak URL gambar
         maxLength : 200
     },
     video:{
-        type : String,
+        type : [String], // Menggunakan array untuk menyimpan banyak URL video
         maxLength : 200
     },
     description:{
@@ -45,6 +41,6 @@ const productSchema = new Schema({
     }
 })
 
-const Products = mongoose.model('Products',productSchema);
+const Courses = mongoose.model('Products',courseSchema);
 
-module.exports = Products;
+module.exports = Courses;

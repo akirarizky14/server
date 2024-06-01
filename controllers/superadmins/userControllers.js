@@ -36,7 +36,8 @@ const signupsa = async (req, res) => {
             email : email,
             password : password,
             roles: role,
-            photos : photos
+            photos : photos,
+            isEmailVerified : true
         });
         const token = createToken(user._id);
         res.status(200).json({ email: user.email, token });
@@ -73,7 +74,7 @@ const getAllUser = async (req,res) =>{
 }
 const updateUserById = async (req, res) => {
     const { id } = req.params; 
-    const { full_name, nick_name, gender, password, born, ads, job_positions, job_industries, countries, provinces, cities, district, roles, photos ,otp} = req.body;
+    const {email, full_name, nick_name, gender, password, born, ads,isEmailVerified, job_positions, job_industries, countries, provinces, cities, district, roles, photos ,otp} = req.body;
     
     try {
         let user = await User.findById(id);
@@ -82,12 +83,14 @@ const updateUserById = async (req, res) => {
             return res.status(404).json({ error: "User not found" });
         }
 
+        user.email = email || user.email;
         user.full_name = full_name || user.full_name;
         user.nick_name = nick_name || user.nick_name;
         user.gender = gender || user.gender;
         user.password = password || user.password;
         user.born = born || user.born;
         user.ads = ads || user.ads;
+        user.isEmailVerified = isEmailVerified || user.isEmailVerified;
         user.job_positions = job_positions || user.job_positions;
         user.job_industries = job_industries || user.job_industries;
         user.countries = countries || user.countries;

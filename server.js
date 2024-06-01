@@ -11,7 +11,7 @@ const uUser = require('./routers/users/userRoutes')
 // SuperAdmin Routes
 const saUser = require('./routers/superadmins/userRoutes')
 const saCat = require('./routers/superadmins/catRoutes')
-const saProduct = require('./routers/superadmins/productRoutes')
+const saCourse = require('./routers/superadmins/courseRoutes')
 
 const cors = require('cors')
 
@@ -21,10 +21,12 @@ app.use(cors({
   allowedHeaders: ['Content-Type','Authorization']
 }));
 
+// Superadmin
 app.use('/v1/api/superadmin/categories',saCat)
-app.use('/v1/api/superadmin/product',saProduct)
+app.use('/v1/api/superadmin/course',saCourse)
 app.use('/v1/api/superadmin/',saUser)
 
+// User
 app.use('/v1/api/user/',uUser)
 
 mongoose.connect(process.env.MONGO_URI)
