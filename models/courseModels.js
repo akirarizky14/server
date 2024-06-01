@@ -38,6 +38,11 @@ const courseSchema = new Schema({
     },
     created_by:{
         type: String
+    },
+    difficulty: {
+        type: String,
+        enum: ['Beginner', 'Intermediate', 'Advanced'],
+        required: true
     }
 })
 
