@@ -7,6 +7,7 @@ const app = express()
 
 // User Routes
 const uUser = require('./routers/users/userRoutes')
+const uCat = require('./routers/users/catRoutes')
 
 // SuperAdmin Routes
 const saUser = require('./routers/superadmins/userRoutes')
@@ -28,6 +29,7 @@ app.use('/v1/api/superadmin/',saUser)
 
 // User
 app.use('/v1/api/user/',uUser)
+app.use('/v1/api/user/categories',uCat)
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {

@@ -1,12 +1,22 @@
 const courseModels = require('../../models/courseModels');
 const userModels = require('../../models/userModels');
+const catModels = require('../../models/catModels');
 
 const createCourse = async (req, res) => {
     try {
-        const { title, photos, video, description, price, stars, thumbnail, file } = req.body;
-        const { _id: user_id, full_name: created_byU } = req.user; 
-        const checkName = await userModels.findOne({_id:user_id});
-        const product = await courseModels.create({
+        const { cat_type, title, photos, video, description, price, stars, thumbnail, file,difficulty } = req.body;
+        const { _id: user_id } = req.user; 
+        const checkName = await userModels.findOne({_id : user_id});
+        if (!checkName) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        const checkCat = await catModels.findOne({ name_cat: cat_type });
+        console.log(checkCat)
+        if (!checkCat) {
+            return res.status(400).json({ error: 'Category does not exist' });
+        }
+        const course = await courseModels.create({
+            cat_type:checkCat.name_cat,
             user_id,
             title,
             photos,
@@ -17,10 +27,11 @@ const createCourse = async (req, res) => {
             thumbnail,
             file,
             created_at: Date.now(),
-            created_by: checkName.full_name
+            created_by: checkName.full_name,
+            difficulty : difficulty
         });
 
-        res.status(200).json(product);
+        res.status(200).json(course);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

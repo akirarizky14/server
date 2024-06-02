@@ -4,7 +4,10 @@ const postCategories = async (req, res) => {
     try {
         const { name_cat, desc } = req.body;
         const user_id = req.user._id;
-
+        const checkName_cat = await catModels.findOne({name_cat : name_cat})
+        if(checkName_cat){
+            throw new Error("Category already exsits")
+        }
         const cat = await catModels.create({
             name_cat: name_cat,
             desc: desc,

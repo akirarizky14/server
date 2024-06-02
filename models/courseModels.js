@@ -11,11 +11,11 @@ const courseSchema = new Schema({
         maxLength : 50
     },
     photos:{
-        type : [String], // Menggunakan array untuk menyimpan banyak URL gambar
+        type : [String], 
         maxLength : 200
     },
     video:{
-        type : [String], // Menggunakan array untuk menyimpan banyak URL video
+        type : [String], 
         maxLength : 200
     },
     description:{
@@ -43,9 +43,13 @@ const courseSchema = new Schema({
         type: String,
         enum: ['Beginner', 'Intermediate', 'Advanced'],
         required: true
+    },
+    cat_type:{
+        type:String,
+        required:true
     }
 })
 
-const Courses = mongoose.model('Products',courseSchema);
+const Courses = mongoose.model('Courses',courseSchema,'Courses');
 
 module.exports = Courses;
