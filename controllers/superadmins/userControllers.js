@@ -125,4 +125,24 @@ const deleteUserById = async (req, res) => {
     }
 };
 
-module.exports = { signupsa, loginsa, getAllUser, updateUserById, deleteUserById };
+const getCountUser = async (req,res) =>{
+    try {
+        const user = await User.countDocuments();
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const filterUser = async (req, res) => {
+    try {
+        const filters = req.query;
+        const users = await User.find(filters);
+
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+module.exports = { signupsa, loginsa, getAllUser, updateUserById, deleteUserById,getCountUser,filterUser };

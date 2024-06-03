@@ -30,7 +30,6 @@ const createCourse = async (req, res) => {
             created_by: checkName.full_name,
             difficulty : difficulty
         });
-
         res.status(200).json(course);
     } catch (error) {
         res.status(500).json({ error: error.message });
