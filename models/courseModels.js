@@ -11,15 +11,13 @@ const courseSchema = new Schema({
         maxLength : 50
     },
     photos:{
-        type : [String], 
-        maxLength : 200
+        type : String
     },
     video:{
-        type : [String], 
-        maxLength : 200
+        type : String
     },
     description:{
-        type: String,
+        type: String
     },
     price:{
         type: Number

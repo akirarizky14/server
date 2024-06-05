@@ -2,12 +2,11 @@ const courseModels = require('../../models/courseModels');
 const userModels = require('../../models/userModels');
 const catModels = require('../../models/catModels');
 
-
 const createCourse = async (req, res) => {
     try {
-        const { cat_type, title, description, price, stars, difficulty } = req.body;
+        const { cat_type, title, description, price, stars, file, difficulty } = req.body;
         const { _id: user_id } = req.user; 
-        const checkName = await userModels.findOne({_id: user_id});
+        const checkName = await userModels.findOne({_id : user_id});
         if (!checkName) {
             return res.status(404).json({ error: 'User not found' });
         }
@@ -16,29 +15,33 @@ const createCourse = async (req, res) => {
             return res.status(400).json({ error: 'Category does not exist' });
         }
 
-        const photos = req.files['photos'] ? req.files['photos'].map(file => `${baseUrl}/${file.path}`) : [];
-        const video = req.files['video'] ? `${baseUrl}/${req.files['video'][0].path}` : null;
-        const thumbnail = req.files['thumbnail'] ? `${baseUrl}/${req.files['thumbnail'][0].path}` : null;
-        
-        const course = await courseModels.create({
+        const photos = req.files['photos'] ? req.files['photos'][0].path.replace(/\\/g, '/') : null;
+        const video = req.files['video'] ? req.files['video'][0].path.replace(/\\/g, '/') : null;
+        const thumbnail = req.files['thumbnail'] ? req.files['thumbnail'][0].path.replace(/\\/g, '/') : null;
+
+        const course = new courseModels({
             cat_type: checkCat.name_cat,
             user_id,
             title,
-            photos,
             video,
             description,
             price,
             stars,
             thumbnail,
+            file,
             created_at: Date.now(),
             created_by: checkName.full_name,
-            difficulty: difficulty
+            difficulty,
+            photos
         });
+
+        await course.save();
         res.status(200).json(course);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
+
 
 const getAllCourses = async (req, res) => {
     try {
