@@ -45,6 +45,10 @@ const courseSchema = new Schema({
     cat_type:{
         type:String,
         required:true
+    },
+    events:{
+        type:Boolean,
+        default: false
     }
 })
 

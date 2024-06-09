@@ -4,7 +4,7 @@ const catModels = require('../../models/catModels');
 
 const createCourse = async (req, res) => {
     try {
-        const { cat_type, title, description, price, stars, file, difficulty } = req.body;
+        const { cat_type, title, description, price, stars, file, difficulty,events } = req.body;
         const { _id: user_id } = req.user; 
         const checkName = await userModels.findOne({_id : user_id});
         if (!checkName) {
@@ -32,7 +32,8 @@ const createCourse = async (req, res) => {
             created_at: Date.now(),
             created_by: checkName.full_name,
             difficulty,
-            photos
+            photos,
+            events
         });
 
         await course.save();
@@ -91,7 +92,7 @@ const deleteCourseById = async (req, res) => {
 const updateCourseById = async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, photos, video, description, price, stars, thumbnail, file } = req.body;
+        const { title, photos, video, description, price, stars, thumbnail, file,events } = req.body;
         
         const updatedData = {
             title,
@@ -101,7 +102,8 @@ const updateCourseById = async (req, res) => {
             price,
             stars,
             thumbnail,
-            file
+            file,
+            events
         };
 
         const course = await courseModels.findByIdAndUpdate(id, updatedData, { new: true });

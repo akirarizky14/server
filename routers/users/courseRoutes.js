@@ -5,5 +5,6 @@ const router = express.Router();
 const middleware = require('../../middleware/auth');
 
 router.get('/getCourseByCategories/:categoryId',courseControllers.getCourseByCategories)
+router.get('/getCourseForEvents',courseControllers.getCourseForEvents)
 
 module.exports = router;

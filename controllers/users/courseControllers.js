@@ -20,4 +20,17 @@ const getCourseByCategories = async(req, res) => {
     }
 }
 
-module.exports = { getCourseByCategories };
+const getCourseForEvents = async(req, res) => {
+    try {
+        const checkCourse = await courseModels.find({events:true})
+        if(!checkCourse){
+            throw Error("Course Not Found");
+        }
+        res.status(200).json(checkCourse);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error.message });
+    }
+}
+
+module.exports = { getCourseByCategories,getCourseForEvents };
