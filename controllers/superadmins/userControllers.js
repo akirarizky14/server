@@ -53,6 +53,9 @@ const loginsa = async (req,res) =>{
         if (!user) {
             throw new Error('User not found');
         }
+        if(user.roles !== 'Admin'){
+            throw new Error('Wrong Role')
+        }
         const passwordMatch = bcrypt.compare(password,user.password);
         if (!passwordMatch) {
             throw new Error('Incorrect Password')

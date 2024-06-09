@@ -4,7 +4,7 @@ const router = express.Router();
 
 const middleware = require('../../middleware/auth');
 
-router.get('/getCategories',middleware ,catControllers.getAllCategoriesCustomer);
+router.get('/getCategories' ,catControllers.getAllCategoriesCustomer);
 
 
 module.exports = router;

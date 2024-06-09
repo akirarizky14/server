@@ -1,13 +1,23 @@
+const courseModels = require('../../models/courseModels');
 const catModels = require('../../models/catModels');
 
-const getAllCategoriesCustomer = async(req,res) =>{
-
+const getCourseByCategories = async(req, res) => {
     try {
-        const getCategories = await catModels.find()
-        res.status(200).json(getCategories)    
+        const { categoryId } = req.params;
+        const checkCat = await catModels.findById(categoryId);
+        if (!checkCat) {
+            throw Error("Category Not Found");
+        }
+        const checkCourse = await courseModels.find({cat_type : checkCat.name_cat})
+        if(!checkCourse){
+            throw Error("Course Not Found");
+        }
+        
+        res.status(200).json(checkCourse);
     } catch (error) {
-        res.status(500).json(console.log(error))
+        console.error(error);
+        res.status(500).json({ message: error.message });
     }
 }
 
-module.exports = {getAllCategoriesCustomer}
+module.exports = { getCourseByCategories };
