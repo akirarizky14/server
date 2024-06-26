@@ -12,11 +12,13 @@ app.use(express.static(path.join(__dirname, '')));
 const uUser = require('./routers/users/userRoutes')
 const uCat = require('./routers/users/catRoutes')
 const uCourse = require('./routers/users/courseRoutes')
+const uProfs = require('./routers/users/profRoutes')
 
 // SuperAdmin Routes
 const saUser = require('./routers/superadmins/userRoutes')
 const saCat = require('./routers/superadmins/catRoutes')
 const saCourse = require('./routers/superadmins/courseRoutes')
+const saProf = require('./routers/superadmins/profRoutes')
 
 const cors = require('cors')
 
@@ -27,6 +29,7 @@ app.use(cors({
 }));
 
 // Superadmin
+app.use('/v1/api/superadmin/professional',saProf)
 app.use('/v1/api/superadmin/categories',saCat)
 app.use('/v1/api/superadmin/course',saCourse)
 app.use('/v1/api/superadmin/',saUser)
@@ -35,6 +38,7 @@ app.use('/v1/api/superadmin/',saUser)
 app.use('/v1/api/user/',uUser)
 app.use('/v1/api/user/categories',uCat)
 app.use('/v1/api/user/course',uCourse)
+app.use('/v1/api/user/professional',uProfs)
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
