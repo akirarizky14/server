@@ -20,6 +20,18 @@ const getCourseByCategories = async(req, res) => {
     }
 }
 
+
+const getCourseByLevel = async (req, res) => {
+    const { difficulty } = req.params;
+    try {
+        const courses = await courseModels.find({ difficulty });
+        res.status(200).json(courses);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to fetch courses by level' });
+    }
+};
+
 const getCourseForEvents = async(req, res) => {
     try {
         const checkCourse = await courseModels.find({events:true})
@@ -33,4 +45,4 @@ const getCourseForEvents = async(req, res) => {
     }
 }
 
-module.exports = { getCourseByCategories,getCourseForEvents };
+module.exports = { getCourseByCategories,getCourseForEvents,getCourseByLevel };

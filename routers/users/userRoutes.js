@@ -7,7 +7,7 @@ const middleware = require('../../middleware/auth');
 router.post('/register', userControllers.createUser);
 router.post('/verify-email', userControllers.verifyEmail);
 router.post('/login', userControllers.loginUser);
-router.get('/getDataById',middleware ,userControllers.getDataById);
+router.get('/getDataById/:id',middleware ,userControllers.getDataById);
 
 
 module.exports = router;
